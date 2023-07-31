@@ -1,9 +1,11 @@
 package cron_field
 
 import (
+	"fmt"
 	"github.com/MyOrg/cron-expression-parser/internal/utils"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 type CronField struct{}
@@ -20,6 +22,10 @@ func init() {
 
 func (cf *CronField) GetCronFieldData(incomingText string, cronFieldType string) ([]string, error) {
 
+	if validateIncomingText(incomingText) {
+		return nil, fmt.Errorf("invalid cron input received, %s", incomingText)
+	}
+
 	rangeArray := cronFieldRangeMap[cronFieldType]
 	minRange, _ := strconv.Atoi(rangeArray[0])
 	maxRange, _ := strconv.Atoi(rangeArray[1])
@@ -28,20 +34,27 @@ func (cf *CronField) GetCronFieldData(incomingText string, cronFieldType string)
 	return result, err
 }
 
+func validateIncomingText(incomingText string) bool {
+	for _, char := range incomingText {
+		if unicode.IsLetter(char) {
+			return true
+		}
+	}
+	return false
+}
+
 func expandCronField(minRange int, maxRange int, incomingText string) ([]string, error) {
-	var result []string
 	if strings.Contains(incomingText, "*/") {
 		return HandleAsteriskSlash(minRange, maxRange, incomingText)
 	} else if strings.Contains(incomingText, "/") {
-		return HandleSlash(maxRange, incomingText)
+		return HandleSlash(minRange, maxRange, incomingText)
 	} else if strings.Contains(incomingText, "*") {
 		return HandleAsterisk(minRange, maxRange)
 	} else if strings.Contains(incomingText, ",") {
-		return HandleComma(incomingText)
+		return HandleComma(minRange, maxRange, incomingText)
 	} else if strings.Contains(incomingText, "-") {
 		return HandleDash(minRange, maxRange, incomingText)
 	} else {
-		result = append(result, incomingText)
+		return HandleSingleInteger(minRange, maxRange, incomingText)
 	}
-	return result, nil
 }

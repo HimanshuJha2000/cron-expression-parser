@@ -25,7 +25,9 @@ func main() {
 	var cronExp cron_expression.CronExpression
 	err = cronExp.GetCronExpression(inputCron)
 	if err != nil {
-		log.Println("Error in processing the cron expression")
+		log.Println(err)
+		return
 	}
+	fmt.Println("Cron string parsed successfully!!")
 	return
 }

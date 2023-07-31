@@ -27,31 +27,31 @@ func (ce *CronExpression) calculateExpression(inputCron string) error {
 
 	minutes, err := cf.GetCronFieldData(inputCronSplit[0], utils.MINUTES)
 	if err != nil {
-		return fmt.Errorf("err : %s", "Error while fetching minutes from cron parser string")
+		return fmt.Errorf("%s %s", "Error while fetching minutes from cron parser string", err)
 	}
 	ce.Minutes = strings.Join(minutes, " ")
 
 	hour, err := cf.GetCronFieldData(inputCronSplit[1], utils.HOUR)
 	if err != nil {
-		return fmt.Errorf("err : %s", "Error while fetching hour from cron parser string")
+		return fmt.Errorf("%s %s", "Error while fetching hour from cron parser string", err)
 	}
 	ce.Hour = strings.Join(hour, " ")
 
 	dayOfMonth, err := cf.GetCronFieldData(inputCronSplit[2], utils.DAY_OF_MONTH)
 	if err != nil {
-		return fmt.Errorf("err : %s", "Error while fetching day of month from cron parser string")
+		return fmt.Errorf("%s %s", "Error while fetching day of month from cron parser string", err)
 	}
 	ce.DayOfMonth = strings.Join(dayOfMonth, " ")
 
 	month, err := cf.GetCronFieldData(inputCronSplit[3], utils.MONTH)
 	if err != nil {
-		return fmt.Errorf("err : %s", "Error while fetching month from cron parser string")
+		return fmt.Errorf("%s %s", "Error while fetching month from cron parser string", err)
 	}
 	ce.Month = strings.Join(month, " ")
 
 	dayOfWeek, err := cf.GetCronFieldData(inputCronSplit[4], utils.DAY_OF_WEEK)
 	if err != nil {
-		return fmt.Errorf("err : %s", "Error while fetching day of week from cron parser string")
+		return fmt.Errorf("%s %s", "Error while fetching day of week from cron parser string", err)
 	}
 	ce.DayOfWeek = strings.Join(dayOfWeek, " ")
 
