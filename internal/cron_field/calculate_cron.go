@@ -61,8 +61,8 @@ func HandleAsterisk(minRange int, maxRange int) ([]string, error) {
 func HandleComma(minRange int, maxRange int, incomingText string) ([]string, error) {
 	var result []string
 	parts := strings.Split(incomingText, ",")
-	for i := 0; i < len(parts); i++ {
 
+	for i := 0; i < len(parts); i++ {
 		// validation for whether the number is within the allowed range or not
 		number, err := strconv.Atoi(parts[i])
 		if err != nil {
@@ -73,10 +73,11 @@ func HandleComma(minRange int, maxRange int, incomingText string) ([]string, err
 		}
 		result = append(result, parts[i])
 	}
+
 	return result, nil
 }
 
-func HandleDash(minRange int, maxRange int, incomingText string) ([]string, error) {
+func HandleDash(minRange int, maxRange int, incomingText string, cronFieldType string) ([]string, error) {
 	var result []string
 	parts := strings.Split(incomingText, "-")
 	startingPoint, err := strconv.Atoi(parts[0])

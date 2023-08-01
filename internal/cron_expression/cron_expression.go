@@ -60,14 +60,6 @@ func (ce *CronExpression) calculateExpression(inputCron string) error {
 	return nil
 }
 
-//func strValues(values []string) []string {
-//	strVals := make([]string, len(values))
-//	for i, v := range values {
-//		strVals[i] = strconv.Itoa(v)
-//	}
-//	return strVals
-//}
-
 func (ce *CronExpression) formatOutputCronExpression(inputCron string) error {
 	err := ce.calculateExpression(inputCron)
 	if err != nil {
